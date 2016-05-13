@@ -170,7 +170,7 @@ namespace WindowsFormsApplication1
                 //範圍裡第2格的值
                 theRow.FileName = ((object[,])this.aRange.Value2)[1, 2] != null ? ((object[,])this.aRange.Value2)[1, 2].ToString() : "";
 
-                //範圍裡第3格的值
+                //範圍裡第4格的值
                 theRow.Color = ((object[,])this.aRange.Value2)[1, 4] != null ? ((object[,])this.aRange.Value2)[1, 4].ToString() : "";
 
                 theRow.Size = ((object[,])this.aRange.Value2)[1, 5] != null ? ((object[,])this.aRange.Value2)[1, 5].ToString() : "";
