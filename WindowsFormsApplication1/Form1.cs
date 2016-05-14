@@ -22,6 +22,8 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+            button1.Hide();
+            label4.Hide();
             button3.Hide();
             progressBar1.Hide();
         }
@@ -33,8 +35,11 @@ namespace WindowsFormsApplication1
         Range aRange = null;
         List<string> ColorList = new List<string>();
         Connect_Net z = new Connect_Net();
+        List<ExcelRowData> DownLoadList = new  List<ExcelRowData>();
         private void button1_Click(object sender, EventArgs e)
         {
+            ExcelRowDataList.Clear();
+            DownLoadList.Clear();
             //openFileDialog1
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -55,8 +60,20 @@ namespace WindowsFormsApplication1
                         getColors();
                         SaveOrInsertSheet(openFileDialog1.FileName, (Worksheet)xlApp.Worksheets[i]);
                     }
-                    label4.Text = "共    " + ExcelRowDataList.Count() + "   個檔案待傳輸";
-                    button3.Show();
+                    if (ExcelRowDataList.Count == 0)
+                    {
+                        label4.Text = "共   0   個檔案待傳輸";
+                        button3.Hide();
+                        progressBar1.Hide();
+                    }
+                    else
+                    {
+                        DownLoadList = ExcelRowDataList.GroupBy(car => car.FileName).Select(g => g.First()).ToList();
+                        label4.Text = "共    " + DownLoadList.Count + "   個檔案待傳輸";
+                        button3.Show();
+                    }
+                    
+                 
                     
                     
                 }
@@ -112,7 +129,8 @@ namespace WindowsFormsApplication1
                 count++;
                 richTextBox1.Text += ("項目 " + count + ":  " + LR + "\r\n");
             }
-
+            button1.Show();
+            label4.Show();
             //ListResult = getFTPList();
 
         }
@@ -313,11 +331,11 @@ namespace WindowsFormsApplication1
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             this.backgroundWorker1.WorkerReportsProgress = true;
-           
-            for (int i = 0; i < ExcelRowDataList.Count; i++)
+
+            for (int i = 0; i < DownLoadList.Count; i++)
             {
-           
-                File_DownLoad(ExcelRowDataList[i]);
+
+                File_DownLoad(DownLoadList[i]);
                 //int barValue = (100 / ExcelRowDataList.Count) * (i);
                 backgroundWorker1.ReportProgress((i+1));
             }
@@ -325,21 +343,22 @@ namespace WindowsFormsApplication1
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            label4.Text = string.Format("共有  {1}  個檔案，正在下載第  {0}  個 。", e.ProgressPercentage, ExcelRowDataList.Count);
+            label4.Text = string.Format("共有  {1}  個檔案，正在下載第  {0}  個 。", e.ProgressPercentage, DownLoadList.Count);
             progressBar1.Value = e.ProgressPercentage;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+
             label4.Text = string.Format("下載完成。 ");
-            progressBar1.Value = ExcelRowDataList.Count;
+            progressBar1.Value = DownLoadList.Count;
             
         }
 
         private void button3_Click(object sender, EventArgs e)
-        {
+        { 
             progressBar1.Show();
-            progressBar1.Maximum = ExcelRowDataList.Count;
+            progressBar1.Maximum = DownLoadList.Count;
             label4.Text = "下載檔案中。";
             backgroundWorker1.RunWorkerAsync();
         }
@@ -523,5 +542,7 @@ namespace WindowsFormsApplication1
             this.aRange = null;
             GC.Collect();
         }
+
+        
     }
 }

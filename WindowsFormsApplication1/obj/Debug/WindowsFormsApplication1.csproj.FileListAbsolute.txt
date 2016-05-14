@@ -34,3 +34,4 @@ D:\NEWApp\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
 D:\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
 D:\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 D:\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+D:\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
