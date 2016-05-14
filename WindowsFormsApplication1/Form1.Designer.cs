@@ -97,6 +97,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(280, 22);
             this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "//118.163.26.253/Fandora/SHOP_ORIGINAL_FILES/";
             // 
             // textBox2
             // 
@@ -204,7 +205,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkedListBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "創衣數位印花有限公司-抓圖軟體";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -23,10 +23,6 @@ E:\work\app\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.e
 E:\work\app\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
 E:\work\app\NEWApp\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
 E:\work\app\NEWApp\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
-E:\work\app\NEWApp\WindowsFormsApplication1\bin\Debug\office.dll
-E:\work\app\NEWApp\WindowsFormsApplication1\bin\Debug\Microsoft.Vbe.Interop.dll
-E:\work\app\NEWApp\WindowsFormsApplication1\bin\Debug\Microsoft.Office.Interop.Excel.xml
-E:\work\app\NEWApp\WindowsFormsApplication1\bin\Debug\office.xml
 E:\work\app\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 E:\work\app\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
 E:\work\app\NEWApp\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
