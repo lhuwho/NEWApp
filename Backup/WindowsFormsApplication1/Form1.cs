@@ -9,9 +9,6 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using Microsoft.Office.Interop.Excel;
-using System.Security.Permissions;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
 
 namespace WindowsFormsApplication1
 {
@@ -111,134 +108,44 @@ namespace WindowsFormsApplication1
 
         }
 
-
-        public class Connect_Net
-        {
-            public string Server_IP
-            {
-                get;
-                set;
-            }
-            public string UserNmae
-            {
-                get;
-                set;
-            }
-            public string Password
-            {
-                get;
-                set;
-            }
-        }
-
-        [DllImport("advapi32.dll", SetLastError = true)]
-        public static extern bool LogonUser(
-            string lpszUsername,
-            string lpszDomain,
-            string lpszPassword,
-            int dwLogonType,
-            int dwLogonProvider,
-            ref IntPtr phToken);
-
-        //登出
-        [DllImport("kernel32.dll")]
-        public extern static bool CloseHandle(IntPtr hToken);
-
-
         public List<string> getFTPList()
         {
             List<string> strList = new List<string>();
+            if (textBox1.Text.Length > 0)
+            {
 
-            if (textBox1.Text.Length > 0) { 
-                Connect_Net z = new Connect_Net();
-                z.UserNmae = textBox2.Text;
-                z.Password = textBox3.Text;
-                z.Server_IP = textBox1.Text;
+                FtpWebRequest f = (FtpWebRequest)WebRequest.Create(new Uri("ftp://" + textBox1.Text));
+                f.Method = WebRequestMethods.Ftp.ListDirectory;
+                f.UseBinary = true;
+                f.AuthenticationLevel = System.Net.Security.AuthenticationLevel.MutualAuthRequested;
+                f.Credentials = new NetworkCredential(textBox2.Text, textBox3.Text);
 
-
-                string newftpUrl = z.Server_IP;// +"tote_checkline";
-                string IPath = String.Format(@"\\{0}", newftpUrl);
-                const int LOGON32_PROVIDER_DEFAULT = 0;
-                const int LOGON32_LOGON_NEW_CREDENTIALS = 9;
-                IntPtr tokenHandle = new IntPtr(0);
-                tokenHandle = IntPtr.Zero;
                 try
                 {
-                    bool returnValue = LogonUser(z.UserNmae, z.Server_IP, z.Password,
-                    LOGON32_LOGON_NEW_CREDENTIALS,
-                    LOGON32_PROVIDER_DEFAULT,
-                    ref tokenHandle);
-                    WindowsIdentity w = new WindowsIdentity(tokenHandle);
-                    System.Security.Principal.WindowsImpersonationContext kk = w.Impersonate();
-                    if (false == returnValue)
+                    StreamReader sr = new StreamReader(f.GetResponse().GetResponseStream());
+                    string str = sr.ReadLine();
+                    while (str != null)
                     {
-                        strList.Add("無法連線");
+                        strList.Add(str);
+                        str = sr.ReadLine();
+
                     }
 
-                    DirectoryInfo dir = new DirectoryInfo(IPath );
-                    if (dir.Exists != true)
-                    {
-                        dir = new DirectoryInfo(IPath);
-                    }
-                    //FileInfo[] inf = dir.GetFiles();
-                    FileSystemInfo[] inf = dir.GetFileSystemInfos();
-                    
-                    for (int i = 0; i < inf.Length; i++)
-                    {
-                        strList.Add(inf[i].Name);
-                        //Console.WriteLine(inf[i].Name);
-                        //檔案取回
-                        // System.IO.File.Copy("\\\\" + z.Server_IP + "\\ftp\\" + inf[i].Name, "C:\\" + inf[i].Name + ".jpg");
-                    }
-                    kk.Undo();
+                    sr.Close();
+                    sr.Dispose();
+                    f = null;
                 }
                 catch (Exception e)
                 {
                     strList.Add(e.Message.ToString());
                 }
-
             }
             else
             {
                 strList.Add("連線失敗");
             }
+
             return strList;
-            //List<string> strList = new List<string>();
-            //if (textBox1.Text.Length > 0)
-            //{
-
-            //    FtpWebRequest f = (FtpWebRequest)WebRequest.Create(new Uri("ftp://" + textBox1.Text));
-            //    f.Method = WebRequestMethods.Ftp.ListDirectory;
-            //    f.UseBinary = true;
-            //    f.AuthenticationLevel = System.Net.Security.AuthenticationLevel.MutualAuthRequested;
-            //    f.Credentials = new NetworkCredential(textBox2.Text, textBox3.Text);
-
-            //    try
-            //    {
-            //        StreamReader sr = new StreamReader(f.GetResponse().GetResponseStream());
-            //        string str = sr.ReadLine();
-            //        while (str != null)
-            //        {
-            //            strList.Add(str);
-            //            str = sr.ReadLine();
-
-            //        }
-
-            //        sr.Close();
-            //        sr.Dispose();
-            //        f = null;
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        strList.Add(e.Message.ToString());
-            //    }
-            //}
-            //else
-            //{
-            //    strList.Add("連線失敗");
-            //}
-
-            //return strList;
         }
 
      
