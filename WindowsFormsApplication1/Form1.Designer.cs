@@ -65,7 +65,8 @@
             "Creamywhiteburgndy",
             "Creamywhitejeanblue",
             "Trigrayblack",
-            "Whitetrigray"});
+            "Whitetrigray",
+            "NA"});
             this.checkedListBox1.Location = new System.Drawing.Point(11, 141);
             this.checkedListBox1.MultiColumn = true;
             this.checkedListBox1.Name = "checkedListBox1";

@@ -36,8 +36,11 @@ namespace WindowsFormsApplication1
         List<string> ColorList = new List<string>();
         Connect_Net z = new Connect_Net();
         List<ExcelRowData> DownLoadList = new  List<ExcelRowData>();
+        StringBuilder LostImg = new StringBuilder();
         private void button1_Click(object sender, EventArgs e)
         {
+            richTextBox1.Text = "";
+            LostImg.Remove(0, LostImg.Length);
             ExcelRowDataList.Clear();
             DownLoadList.Clear();
             //openFileDialog1
@@ -352,7 +355,10 @@ namespace WindowsFormsApplication1
 
             label4.Text = string.Format("下載完成。 ");
             progressBar1.Value = DownLoadList.Count;
-            
+            if (LostImg.Length != 0)
+            {
+                richTextBox1.Text = LostImg.ToString();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -383,10 +389,11 @@ namespace WindowsFormsApplication1
                 if (!(dir.Exists && inf.Length > 0 && inf[0].Exists))
                 {
 
-                    newftpUrl = textBox1.Text + rowData.Item;
-                    IPath = String.Format(@"\\{0}", newftpUrl);
-                    DirectoryInfo dir_checkagain = new DirectoryInfo(IPath + "\\");
-                    inf = dir_checkagain.GetFiles(rowData.FileName + extension);
+                    //newftpUrl = textBox1.Text + rowData.Item;
+                    //IPath = String.Format(@"\\{0}", newftpUrl);
+                    //DirectoryInfo dir_checkagain = new DirectoryInfo(IPath + "\\");
+                    //inf = dir_checkagain.GetFiles(rowData.FileName + extension);
+                    LostImg.AppendLine(string.Format("類別：{1}，缺少圖檔：{0} ", rowData.FileName,rowData.Item));
                 }
                 if (dir.Exists && inf.Length > 0 && inf[0].Exists)
                 {
