@@ -66,6 +66,8 @@
             "Creamywhitejeanblue",
             "Trigrayblack",
             "Whitetrigray",
+            "Red",
+            "Burgundy",
             "NA"});
             this.checkedListBox1.Location = new System.Drawing.Point(11, 141);
             this.checkedListBox1.MultiColumn = true;
@@ -206,7 +208,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkedListBox1);
             this.Name = "Form1";
-            this.Text = "創衣數位印花有限公司-抓圖軟體";
+            this.Text = "創衣數位印花有限公司-抓圖軟體ver.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
